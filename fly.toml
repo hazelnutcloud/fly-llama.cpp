@@ -1,0 +1,32 @@
+# fly.toml app configuration file generated for llm-hh-green-feather-4312 on 2024-06-20T12:05:03+08:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'llm-hh-green-feather-4312'
+primary_region = 'ord'
+
+[build]
+
+[env]
+  MODEL_FILE = 'phi-3-mini-4k-instruct-q4.gguf'
+  MODEL_URL = 'https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf/resolve/main/Phi-3-mini-4k-instruct-q4.gguf?download=true'
+
+[[mounts]]
+  source = 'models'
+  destination = '/models'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '8gb'
+  cpu_kind = 'performance'
+  cpus = 1
+  gpus = 1
+  gpu_kind = 'a10'
