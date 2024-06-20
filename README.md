@@ -9,6 +9,7 @@ Uses the most minimal dependencies possible to create a small image. Downloads m
 ```sh
 fly launch --no-deploy
 fly vol create models -s 10 --vm-gpu-kind a10 --region ord
+fly secrets set API_KEY=<your-api-key>
 fly deploy
 ```
 
@@ -29,3 +30,13 @@ This example uses the `phi-3-mini-4k-instruct` model by default. To use a differ
 
 1. update the `MODEL_URL` and `MODEL_FILE` env variables in the fly.toml file to your desired model. The file will be downloaded as `/models/$MODEL_FILE` on next deploy.
 2. To delete any existing model files, use `fly ssh console` to connect to your machine and run `rm /models/<model_file>`.
+
+### API Key
+
+This example sets the `--api-key` flag on the server start command to guard against unauthorized access. To set the API key:
+
+```sh
+fly secrets set API_KEY=<your-api-key>
+```
+
+The app will use the new API key on the next deploy.
